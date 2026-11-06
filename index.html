@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6A1B3A">
+<meta name="color-scheme" content="light">
+<title>Apps de la clínica</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(PlusJakartaSans.ttf) format("truetype");font-weight:200 800;font-display:swap}
+:root{--vino:#6A1B3A;--vino2:#4E1229;--suave:#F4E8ED;--fondo:#F7F1F3;--borde:#E6DADF;--txt:#26181D;--sec:#6d5a64;--ease-out:cubic-bezier(0.23,1,0.32,1)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--fondo);color:var(--txt);font:16px/1.45 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+body{min-height:100dvh}
+:focus-visible{outline:3px solid #C9A3B4;outline-offset:2px}
+header{background:var(--vino);color:#fff;padding:calc(18px + env(safe-area-inset-top)) 16px 20px}
+.cab{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.cab img{width:56px;height:56px;border-radius:50%;background:#fff;flex:none}
+.cab h1{margin:0;font-size:20px;font-weight:800;line-height:1.2}
+.cab p{margin:2px 0 0;font-size:13px;opacity:.85}
+main{max-width:960px;margin:0 auto;padding:6px 16px calc(28px + env(safe-area-inset-bottom))}
+h2{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--sec);margin:20px 2px 10px}
+.grilla{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.app{display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid var(--borde);border-radius:16px;padding:14px 12px;min-height:132px;
+  text-decoration:none;color:inherit;box-shadow:0 1px 2px rgba(38,24,29,.05),0 4px 14px rgba(38,24,29,.04);transition:transform 150ms var(--ease-out)}
+.app:active{transform:scale(.97)}
+.app img{width:46px;height:46px;border-radius:12px}
+.app b{font-size:15px;font-weight:800;line-height:1.25}
+.app span{font-size:12.5px;color:var(--sec);line-height:1.35}
+.instalar{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:22px;min-height:52px;border-radius:14px;
+  border:1.5px solid var(--vino);background:var(--suave);color:var(--vino);font:inherit;font-weight:800;font-size:15px;cursor:pointer}
+.instalar[hidden]{display:none}
+.instalar svg{width:20px;height:20px}
+.nota{text-align:center;color:var(--sec);font-size:12.5px;margin-top:14px}
+@media (min-width:640px){.grilla{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:960px){.grilla{grid-template-columns:repeat(4,minmax(0,1fr))}.instalar{max-width:360px;margin-left:auto;margin-right:auto}}
+@media (hover:hover){.app:hover{border-color:var(--vino);background:#FDFAFB}.instalar:hover{background:var(--vino);color:#fff}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.app:active{transform:none}}
+</style>
+</head>
+<body>
+<header><div class="cab"><img src="logo.jpg" alt="Clínica Reina Catalina">
+  <div><h1>Apps de la clínica</h1><p>Clínica Reina Catalina · Gases medicinales</p></div></div></header>
+<main id="contenido"></main>
+
+<script>
+'use strict';
+/* Lista de apps del portal. Para agregar o quitar una, edita solo esta lista. */
+const GRUPOS = [
+  { titulo: 'Rondas', apps: [
+    { nombre: 'Control de cilindros', detalle: 'Ronda diaria de cilindros', url: '/Control-de-cilindros-/', icono: 'iconos/cilindros.png' },
+    { nombre: 'Ronda de tomas', detalle: 'Tomas de gases por piso', url: '/Ronda-Diaria-/', icono: 'iconos/ronda.png' }
+  ]},
+  { titulo: 'Inventarios', apps: [
+    { nombre: 'Inventario de cilindros', detalle: 'Propios y de Messer', url: '/Inventario-de-cilindros/', icono: 'iconos/inv-cilindros.png' },
+    { nombre: 'Material de gases', detalle: 'Acoples, tomas, mangueras', url: '/Inventario-Gases/', icono: 'iconos/inv-gases.png' }
+  ]},
+  { titulo: 'Monitoreo y proyectos', apps: [
+    { nombre: 'Tanques criogénicos', detalle: 'Nivel y recargas', url: '/Tanques-criogenicos/', icono: 'iconos/tanques.png' },
+    { nombre: 'Alarmas de gases', detalle: 'Levantamiento por estar', url: '/Alarmas-de-gases/', icono: 'iconos/alarmas.png' }
+  ]}
+];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+document.getElementById('contenido').innerHTML =
+  GRUPOS.map(g => `<h2>${esc(g.titulo)}</h2><div class="grilla">` +
+    g.apps.map(a => `<a class="app" href="${esc(a.url)}"><img src="${esc(a.icono)}" alt="" width="46" height="46"><b>${esc(a.nombre)}</b><span>${esc(a.detalle)}</span></a>`).join('') +
+    '</div>').join('') +
+  `<button class="instalar" id="bInstalar" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 21h14"/></svg>Instalar el portal</button>
+   <p class="nota">Cada app pide su propio código de acceso.</p>`;
+
+/* Botón de instalar: aparece solo cuando el navegador lo permite */
+let evInstalar = null;
+const bI = document.getElementById('bInstalar');
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); evInstalar = e; bI.hidden = false; });
+bI.onclick = async () => { if (!evInstalar) return; evInstalar.prompt(); await evInstalar.userChoice; evInstalar = null; bI.hidden = true; };
+addEventListener('appinstalled', () => { bI.hidden = true; });
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
+</script>
+</body>
+</html>
