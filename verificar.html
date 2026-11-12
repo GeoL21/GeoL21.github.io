@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6A1B3A">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<title>Verificar ronda · Clínica Reina Catalina</title>
+<link rel="icon" href="icon-192.png">
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(PlusJakartaSans.ttf) format("truetype");font-weight:200 800;font-display:swap}
+:root{--vino:#6A1B3A;--suave:#F4E8ED;--fondo:#F7F1F3;--borde:#E6DADF;--txt:#26181D;--sec:#6d5a64;--ok:#22694B;--okbg:#E4F3EC;--mal:#B3261E;--malbg:#FCEBEA;--avbg:#FFF3DC;--av:#8A5200;--ease-out:cubic-bezier(0.23,1,0.32,1)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--fondo);color:var(--txt);font:16px/1.45 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+:focus-visible{outline:3px solid #C9A3B4;outline-offset:2px}
+header{background:#fff;border-bottom:1px solid #EFE4E8;padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
+.cab{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.cab img{width:44px;height:44px;border-radius:50%;border:2px solid var(--vino);flex:none}
+.cab h1{margin:0;font-size:17px;font-weight:800;color:var(--vino);line-height:1.2}
+.cab p{margin:0;font-size:12.5px;color:var(--sec)}
+.cab a{margin-left:auto;color:var(--vino);font-size:13px;font-weight:700;text-decoration:none}
+main{max-width:560px;margin:0 auto;padding:14px 16px calc(28px + env(safe-area-inset-bottom))}
+.card{background:#fff;border:1px solid var(--borde);border-radius:16px;padding:14px;margin-bottom:14px;box-shadow:0 2px 8px rgba(106,27,58,.06)}
+label{display:block;font-size:13px;font-weight:700;color:var(--sec);margin:0 0 4px}
+input{width:100%;font:inherit;font-size:16px;padding:12px;border:1.5px solid var(--borde);border-radius:12px;background:#fff;color:var(--txt);outline:none;margin-bottom:12px}
+input:focus{border-color:var(--vino);box-shadow:0 0 0 3px rgba(106,27,58,.12)}
+#cod{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;text-transform:uppercase}
+.fila{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button,.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:12px;border:1.5px solid var(--vino);background:#fff;color:var(--vino);
+ font:inherit;font-weight:700;font-size:14.5px;cursor:pointer;text-decoration:none;transition:transform 150ms var(--ease-out);padding:0 12px;width:100%}
+button:active,.btn:active{transform:scale(.97)}
+button.pri{background:var(--vino);color:#fff;margin-top:8px}
+button:disabled{opacity:.6}
+button svg,.btn svg{width:20px;height:20px;flex:none}
+.err{color:var(--mal);font-size:13.5px;margin:-6px 0 10px;min-height:0}
+.nota{font-size:12.5px;color:var(--sec);margin:8px 0 0}
+.link{border:0;background:none;color:var(--sec);font-size:13px;font-weight:600;min-height:40px;text-decoration:underline;width:auto;margin:0 auto}
+#cam{display:none;margin-top:12px}
+#cam video{width:100%;border-radius:12px;background:#000;aspect-ratio:1/1;object-fit:cover}
+.res{border-radius:16px;overflow:hidden;border:1px solid var(--borde);background:#fff;margin-bottom:14px}
+.res .top{display:flex;gap:12px;align-items:center;padding:14px}
+.res .top svg{width:30px;height:30px;flex:none}
+.res .top b{display:block;font-size:17px}
+.res .top small{font-size:13px}
+.res.ok .top{background:var(--okbg);color:var(--ok)}.res.mal .top{background:var(--malbg);color:var(--mal)}.res.av .top{background:var(--avbg);color:var(--av)}
+.dl{padding:6px 14px 14px;font-size:14px}
+.dl div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #F1E8EC}
+.dl div span:first-child{color:var(--sec)}.dl div span:last-child{text-align:right}
+.dl h3{font-size:13px;color:var(--vino);margin:12px 0 2px}
+.dl .cil{display:block;padding:6px 0;border-bottom:1px solid #F1E8EC}.cil b{display:block}.cil small{color:var(--sec)}
+.res .btn{margin-top:12px}
+@media (hover:hover){button:hover,.btn:hover{background:var(--suave)}button.pri:hover{background:#4E1229}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="cab"><img src="logo.jpg" alt="Clínica Reina Catalina">
+ <div><h1>Verificar ronda</h1><p>Control de cilindros de gas</p></div><a href="/">Portal</a></div></header>
+<main>
+ <div class="card" id="cAdmin" hidden>
+  <label for="adm">Código de administrador</label>
+  <input id="adm" type="password" autocomplete="current-password">
+  <p class="nota" style="margin-top:-6px">Solo se pide una vez en este equipo.</p>
+ </div>
+ <div class="card">
+  <label for="ron">Número de ronda</label>
+  <input id="ron" placeholder="R-20261112-154838-19d" autocomplete="off" autocapitalize="characters" spellcheck="false">
+  <label for="cod">Código de verificación</label>
+  <input id="cod" placeholder="AA88-361F" autocomplete="off" spellcheck="false" maxlength="11">
+  <div class="err" id="err" role="alert"></div>
+  <div class="fila">
+   <button type="button" id="bCam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 8h3v3H8zM13 13h3v3h-3zM13 8h3M8 13v3"/></svg>Escanear QR</button>
+   <label class="btn" style="margin:0;color:var(--vino);font-size:14.5px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>Elegir imagen<input type="file" id="fImg" accept="image/*" hidden></label>
+  </div>
+  <div id="cam"><video id="vid" playsinline muted></video><button type="button" id="bCerrar" style="margin-top:8px">Cerrar cámara</button></div>
+  <button type="button" class="pri" id="bVer">Verificar</button>
+ </div>
+ <div id="out"></div>
+ <button type="button" class="link" id="bOlvidar" hidden>Olvidar el código de administrador en este equipo</button>
+</main>
+<script src="/Control-de-cilindros-/config.js"></script>
+<script src="jsQR.js"></script>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const K_ADMIN = 'ver:admin';
+const leer = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+const guardar = (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) { } };
+const normCod = s => String(s || '').toUpperCase().replace(/[^0-9A-F]/g, '').replace(/^(.{4})(.+)$/, '$1-$2').slice(0, 9);
+const IC = {
+ ok: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+ mal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>'
+};
+
+function pintarAdmin() { const hay = !!leer(K_ADMIN); $('cAdmin').hidden = hay; $('bOlvidar').hidden = !hay; }
+$('bOlvidar').onclick = () => { guardar(K_ADMIN, null); pintarAdmin(); $('out').innerHTML = ''; };
+$('cod').addEventListener('input', e => { const v = normCod(e.target.value); if (v !== e.target.value) e.target.value = v; });
+['ron', 'cod', 'adm'].forEach(id => $(id).addEventListener('input', () => { $('err').textContent = ''; }));
+
+/* ---------- Leer QR (cámara o imagen) ---------- */
+function usarTextoQR(t) {
+ try { const u = new URL(t); const r = u.searchParams.get('r'), c = u.searchParams.get('c');
+  if (!r || !c) throw 0; $('ron').value = r; $('cod').value = normCod(c); verificar(); return true; }
+ catch (e) { $('err').textContent = 'Ese QR no es de una ronda de cilindros.'; return false; }
+}
+const detector = ('BarcodeDetector' in window) ? (() => { try { return new BarcodeDetector({ formats: ['qr_code'] }); } catch (e) { return null; } })() : null;
+async function leerQR(fuente, w, h) {
+ if (detector) { try { const r = await detector.detect(fuente); if (r.length) return r[0].rawValue; } catch (e) { } }
+ const c = document.createElement('canvas'), s = Math.min(1, 1600 / Math.max(w, h)); c.width = Math.round(w * s); c.height = Math.round(h * s);
+ const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(fuente, 0, 0, c.width, c.height);
+ const d = x.getImageData(0, 0, c.width, c.height), q = jsQR(d.data, c.width, c.height, { inversionAttempts: 'dontInvert' });
+ return q ? q.data : null;
+}
+$('fImg').onchange = async e => {
+ const f = e.target.files[0]; e.target.value = ''; if (!f) return; $('err').textContent = 'Buscando el QR en la imagen…';
+ try { const bmp = await createImageBitmap(f); const t = await leerQR(bmp, bmp.width, bmp.height);
+  $('err').textContent = ''; if (!t) $('err').textContent = 'No encontré un QR en esa imagen. Usa el JPG de la ronda o escribe los datos.'; else usarTextoQR(t); }
+ catch (x) { $('err').textContent = 'No se pudo abrir esa imagen.'; }
+};
+let flujo = null, mirando = false;
+function cerrarCam() { mirando = false; if (flujo) flujo.getTracks().forEach(t => t.stop()); flujo = null; $('cam').style.display = 'none'; }
+$('bCerrar').onclick = cerrarCam;
+$('bCam').onclick = async () => {
+ if (flujo) return cerrarCam();
+ try { flujo = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false }); }
+ catch (e) { $('err').textContent = 'No se pudo abrir la cámara. Revisa el permiso o usa "Elegir imagen".'; return; }
+ const v = $('vid'); v.srcObject = flujo; $('cam').style.display = 'block'; await v.play(); mirando = true;
+ const ciclo = async () => { if (!mirando) return;
+  if (v.videoWidth) { const t = await leerQR(v, v.videoWidth, v.videoHeight); if (t && mirando) { cerrarCam(); usarTextoQR(t); return; } }
+  setTimeout(ciclo, 250); };
+ ciclo();
+};
+
+/* ---------- Verificar con el servidor ---------- */
+async function api(accion, datos) {
+ if (!window.API_URL) throw new Error('No se encontró la dirección del servidor de Control de cilindros.');
+ let cod = ''; try { cod = JSON.parse(leer('cil:codigo') || '""'); } catch (e) { }
+ const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 45000); let txt;
+ try { const r = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ accion, codigo: cod, datos }), signal: ctl.signal, redirect: 'follow' }); txt = await r.text(); }
+ catch (e) { throw new Error('Sin conexión con el servidor. Esta página necesita internet.'); }
+ finally { clearTimeout(t); }
+ let j; try { j = JSON.parse(txt); } catch (e) { throw new Error('El servidor no respondió bien.'); }
+ if (!j.ok) { const e = new Error(j.error || 'Error del servidor.'); e.admin = !!j.admin; throw e; }
+ return j.data;
+}
+const fila = (a, b) => `<div><span>${esc(a)}</span><span>${esc(b)}</span></div>`;
+const unidad = g => g === 'Dioxicarbomed' ? 'MPa' : 'PSI';
+const urlJpg = u => /^https:\/\//.test(String(u || '')) ? u : '';
+async function verificar() {
+ const ron = $('ron').value.trim(), cod = normCod($('cod').value), adm = leer(K_ADMIN) || $('adm').value.trim();
+ if (!adm) { $('err').textContent = 'Escribe tu código de administrador.'; $('adm').focus(); return; }
+ if (!/^R-\d{8}-\d{6}-\w+$/i.test(ron)) { $('err').textContent = 'Escribe el número de ronda como aparece en el reporte (R-…).'; $('ron').focus(); return; }
+ if (!/^[0-9A-F]{4}-[0-9A-F]{4}$/.test(cod)) { $('err').textContent = 'El código tiene 8 letras y números, como AA88-361F.'; $('cod').focus(); return; }
+ const b = $('bVer'); b.disabled = true; b.textContent = 'Verificando…'; $('out').innerHTML = '';
+ try {
+  const d = await api('verificar', { codigoAdmin: adm, ronda: ron });
+  if (!leer(K_ADMIN)) { guardar(K_ADMIN, adm); $('adm').value = ''; pintarAdmin(); }
+  if (!d || !d.encontrada) {
+   $('out').innerHTML = `<div class="res av" role="status"><div class="top">${IC.mal}<div><b>Ronda no encontrada</b><small>No hay ninguna ronda ${esc(ron)} en el historial. Revisa el número.</small></div></div></div>`; return; }
+  const r = d.ronda || {}, bien = String(d.codigo || '').toUpperCase() === cod;
+  const top = bien
+   ? `<div class="top">${IC.ok}<div><b>Ronda auténtica</b><small>El código coincide con los datos guardados. La ronda no ha cambiado desde que se registró.</small></div></div>`
+   : `<div class="top">${IC.mal}<div><b>No coincide</b><small>El código ${esc(cod)} no corresponde a los datos guardados de esta ronda. Puede que la hoja o la imagen se hayan modificado. Compara con los datos de abajo.</small></div></div>`;
+  const items = (r.items || []).map(i => `<div class="cil"><b>${esc(i.gas)} · ${esc(i.serial)}</b><small>${esc(i.presion)} ${unidad(i.gas)} · ${esc(i.ubicacion)}${i.obs ? ' · ' + esc(i.obs) : ''}</small></div>`).join('');
+  $('out').innerHTML = `<div class="res ${bien ? 'ok' : 'mal'}" role="status">${top}<div class="dl">
+   ${fila('Ronda', r.id)}${fila('Sede · lugar', (r.sede || '') + ' · ' + (r.lugar || ''))}${fila('Fecha', (r.fecha || '') + ' · ' + (r.hora || ''))}
+   ${fila('Realiza', r.realiza)}${r.firmaRealiza ? fila('Firma de quien realiza', r.firmaRealiza) : ''}
+   ${fila('Recibe', r.recibe)}${r.firmaRecibe ? fila('Firma de quien recibe', r.firmaRecibe) : ''}
+   ${bien ? '' : fila('Código correcto según los datos', d.codigo)}
+   <h3>Cilindros (${(r.items || []).length})</h3>${items}
+   ${urlJpg(r.url) ? `<a class="btn" href="${esc(urlJpg(r.url))}" target="_blank" rel="noopener">Ver reporte original en Drive</a>` : ''}</div></div>`;
+ } catch (e) {
+  if (e.admin) { guardar(K_ADMIN, null); pintarAdmin(); $('err').textContent = 'El código de administrador no es correcto.'; $('adm').focus(); }
+  else $('err').textContent = e.message;
+ } finally { b.disabled = false; b.textContent = 'Verificar'; }
+}
+$('bVer').onclick = verificar;
+[$('ron'), $('cod'), $('adm')].forEach(i => i.addEventListener('keydown', e => { if (e.key === 'Enter') verificar(); }));
+
+pintarAdmin();
+const P = new URLSearchParams(location.search);
+if (P.get('r')) $('ron').value = P.get('r');
+if (P.get('c')) $('cod').value = normCod(P.get('c'));
+if (P.get('r') && P.get('c') && leer(K_ADMIN)) verificar();
+</script>
+</body>
+</html>

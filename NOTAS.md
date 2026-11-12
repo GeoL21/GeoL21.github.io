@@ -10,3 +10,10 @@ Si agregas un ícono, súmalo también a `ARCHIVOS` en `sw.js` y sube `VERSION`.
 ## Cuidado
 Este sitio está en la raíz del dominio, donde viven las demás apps.
 El service worker solo atiende los archivos del portal; no cambiar eso.
+
+## Verificar ronda (verificar.html)
+Página para comprobar el código de verificación de las rondas de Control de cilindros. Solo para el administrador:
+pide el código de administrador (CODIGO_ADMIN de Control de cilindros) y lo recuerda en ese equipo (`ver:admin`).
+No está en la lista del portal a propósito. Usa la dirección del servidor de `/Control-de-cilindros-/config.js`
+y la acción `verificar` de su Apps Script. Lee el QR del reporte con la cámara o desde la imagen (jsQR.js, MIT).
+No va en el service worker: necesita internet.
