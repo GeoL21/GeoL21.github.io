@@ -146,7 +146,6 @@ async function api(accion, datos) {
  return j.data;
 }
 const fila = (a, b) => `<div><span>${esc(a)}</span><span>${esc(b)}</span></div>`;
-const unidad = g => g === 'Dioxicarbomed' ? 'MPa' : 'PSI';
 const urlJpg = u => /^https:\/\//.test(String(u || '')) ? u : '';
 async function verificar() {
  const ron = $('ron').value.trim(), cod = normCod($('cod').value), adm = leer(K_ADMIN) || $('adm').value.trim();
@@ -159,11 +158,13 @@ async function verificar() {
   if (!leer(K_ADMIN)) { guardar(K_ADMIN, adm); $('adm').value = ''; pintarAdmin(); }
   if (!d || !d.encontrada) {
    $('out').innerHTML = `<div class="res av" role="status"><div class="top">${IC.mal}<div><b>Ronda no encontrada</b><small>No hay ninguna ronda ${esc(ron)} en el historial. Revisa el número.</small></div></div></div>`; return; }
-  const r = d.ronda || {}, bien = String(d.codigo || '').toUpperCase() === cod;
+  const r = d.ronda || {}, calc = String(d.codigo || '').toUpperCase(), guard = String(d.codigoGuardado || '').toUpperCase();
+  const hojaCambio = !!guard && guard !== calc, bien = calc === cod && !hojaCambio;
   const top = bien
    ? `<div class="top">${IC.ok}<div><b>Ronda auténtica</b><small>El código coincide con los datos guardados. La ronda no ha cambiado desde que se registró.</small></div></div>`
+   : hojaCambio ? `<div class="top">${IC.mal}<div><b>La hoja fue modificada</b><small>Los datos de esta ronda en la hoja cambiaron después de registrarse. Al registrarla el código era ${esc(guard)}; con los datos de hoy da ${esc(calc)}. Compara con el reporte original.</small></div></div>`
    : `<div class="top">${IC.mal}<div><b>No coincide</b><small>El código ${esc(cod)} no corresponde a los datos guardados de esta ronda. Puede que la hoja o la imagen se hayan modificado. Compara con los datos de abajo.</small></div></div>`;
-  const items = (r.items || []).map(i => `<div class="cil"><b>${esc(i.gas)} · ${esc(i.serial)}</b><small>${esc(i.presion)} ${unidad(i.gas)} · ${esc(i.ubicacion)}${i.obs ? ' · ' + esc(i.obs) : ''}</small></div>`).join('');
+  const items = (r.items || []).map(i => `<div class="cil"><b>${esc(i.gas)} · ${esc(i.serial)}</b><small>${esc(i.presion)} · ${esc(i.ubicacion)}${i.obs ? ' · ' + esc(i.obs) : ''}</small></div>`).join('');
   $('out').innerHTML = `<div class="res ${bien ? 'ok' : 'mal'}" role="status">${top}<div class="dl">
    ${fila('Ronda', r.id)}${fila('Sede · lugar', (r.sede || '') + ' · ' + (r.lugar || ''))}${fila('Fecha', (r.fecha || '') + ' · ' + (r.hora || ''))}
    ${fila('Realiza', r.realiza)}${r.firmaRealiza ? fila('Firma de quien realiza', r.firmaRealiza) : ''}
