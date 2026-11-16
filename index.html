@@ -22,37 +22,29 @@ html,body{margin:0;background:var(--fondo);color:var(--txt);font:16px/1.45 "Goog
 body{min-height:100dvh}
 :focus-visible{outline:3px solid var(--vino);outline-offset:2px}
 .todo{max-width:1040px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 16px calc(32px + env(safe-area-inset-bottom))}
-.hrow{display:flex;justify-content:flex-end}
-.hrow img{width:56px;height:56px;display:block}
-h1{margin:20px 8px 6px;font-size:34px;line-height:42px;font-weight:700;letter-spacing:-.3px}
-.sub{margin:0 8px;font-size:15px;color:var(--sec)}
-.estado{margin:12px 8px 0;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.estado .fecha{font-size:14px;color:var(--sec)}
-.hora{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:18px;background:var(--tarjeta);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.hora svg{width:18px;height:18px;color:var(--vino)}
-h2{margin:26px 8px 12px;font-size:15px;font-weight:600;color:var(--vino)}
-.grupo{display:flex;flex-direction:column;gap:3px}
-.app{display:flex;align-items:center;gap:16px;padding:14px 12px 14px 16px;background:var(--tarjeta);border-radius:6px;text-decoration:none;color:inherit;
+.cabeza{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cabeza img{width:52px;height:52px;display:block;flex:none}
+h1{margin:4px 8px 2px;font-size:28px;line-height:36px;font-weight:700;letter-spacing:-.3px}
+.sub{margin:0 8px;font-size:14px;color:var(--sec);font-variant-numeric:tabular-nums}
+/* Cuadrícula de íconos, como la pantalla de inicio del celular: todo cabe sin bajar */
+.grilla{margin-top:26px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 6px;background:var(--tarjeta);border-radius:28px;padding:24px 8px}
+.app{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;text-decoration:none;color:inherit;border-radius:20px;padding:4px 2px;
   transition:transform 250ms var(--m3),background 200ms;animation:entra 450ms var(--m3in) both}
-.app:first-child{border-top-left-radius:28px;border-top-right-radius:28px}
-.app:last-child{border-bottom-left-radius:28px;border-bottom-right-radius:28px}
-.app:active{transform:scale(.98)}
-.app img{width:52px;height:52px;border-radius:50%;flex:none}
-.app .t{flex:1;min-width:0}
-.app b{display:block;font-size:17px;font-weight:500}
-.app span{display:block;font-size:13.5px;color:var(--sec);margin-top:2px}
-.app svg{width:24px;height:24px;color:var(--sec);flex:none}
-@keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.app:active{transform:scale(.94)}
+.app img{width:64px;height:64px;border-radius:50%}
+.app b{font-size:13.5px;line-height:1.25;font-weight:500}
+@keyframes entra{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
 .instalar{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:360px;margin:28px auto 0;height:56px;border-radius:28px;border:0;
   background:var(--cont);color:var(--cont-txt);font:inherit;font-size:15.5px;font-weight:600;cursor:pointer;transition:transform 250ms var(--m3)}
 .instalar:active{transform:scale(.97)}
 .instalar[hidden]{display:none}
 .instalar svg{width:20px;height:20px}
 .nota{text-align:center;color:var(--sec);font-size:13px;margin-top:14px}
-@media (min-width:900px){
-  .todo{padding:32px 56px 40px}
-  .hrow{justify-content:flex-start}
-  .grupos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
+@media (min-width:700px){
+  .todo{max-width:880px;padding:40px 32px}
+  .grilla{grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 8px;padding:32px 16px}
+  .app img{width:76px;height:76px}
+  .app b{font-size:15px}
 }
 @media (hover:hover){.app:hover{background:var(--tarjeta2)}.instalar:hover{background:#FFC9CF}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -60,11 +52,11 @@ h2{margin:26px 8px 12px;font-size:15px;font-weight:600;color:var(--vino)}
 </head>
 <body>
 <div class="todo">
-  <div class="hrow"><img src="logo-crc.png" alt="Clínica Reina Catalina"></div>
-  <h1>Apps de la clínica</h1>
-  <p class="sub">Clínica Reina Catalina · Gases medicinales</p>
-  <div class="estado"><span class="fecha" id="fecha"></span>
-    <span class="hora" aria-label="Hora de Colombia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="hora"></span></span></div>
+  <div class="cabeza">
+    <div><h1>Apps de la clínica</h1>
+      <p class="sub"><span id="fecha"></span> · <span id="hora"></span></p></div>
+    <img src="logo-crc.png" alt="Clínica Reina Catalina">
+  </div>
   <main id="contenido"></main>
 </div>
 
@@ -90,12 +82,10 @@ const GRUPOS = [
 ];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-const FLECHA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
 let k = 0;
 document.getElementById('contenido').innerHTML =
-  '<div class="grupos">' + GRUPOS.map(g => `<section><h2>${esc(g.titulo)}</h2><div class="grupo">` +
-    g.apps.map(a => `<a class="app" href="${esc(a.url)}" style="animation-delay:${(k++) * 45}ms"><img src="${esc(a.icono)}" alt="" width="52" height="52"><div class="t"><b>${esc(a.nombre)}</b><span>${esc(a.detalle)}</span></div>${FLECHA}</a>`).join('') +
-    '</div></section>').join('') + '</div>' +
+  '<nav class="grilla" aria-label="Apps">' + GRUPOS.map(g => g.apps.map(a =>
+    `<a class="app" href="${esc(a.url)}" title="${esc(a.detalle)}" style="animation-delay:${(k++) * 40}ms"><img src="${esc(a.icono)}" alt="" width="64" height="64"><b>${esc(a.nombre)}</b></a>`).join('')).join('') + '</nav>' +
   `<button class="instalar" id="bInstalar" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7m-3-3 3 3 3-3"/></svg>Instalar el portal</button>
    <p class="nota">Cada app pide su propio código de acceso.</p>`;
 
