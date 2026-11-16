@@ -3,48 +3,70 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#6A1B3A">
+<meta name="theme-color" content="#FFF8F7">
 <meta name="color-scheme" content="light">
 <title>Apps de la clínica</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-@font-face{font-family:"Plus Jakarta Sans";src:url(PlusJakartaSans.ttf) format("truetype");font-weight:200 800;font-display:swap}
-:root{--vino:#6A1B3A;--vino2:#4E1229;--suave:#F4E8ED;--fondo:#F7F1F3;--borde:#E6DADF;--txt:#26181D;--sec:#6d5a64;--ease-out:cubic-bezier(0.23,1,0.32,1)}
+/* Estándar visual de las PWA (Material 3, estilo Mornye) – 16 nov 2026 */
+:root{--vino:#8E4953;--cont:#FFD9DD;--cont-txt:#3B0713;--fondo:#FFF8F7;--tarjeta:#F8ECEC;--tarjeta2:#F0DEDF;--txt:#22191A;--sec:#534345;
+  --m3:cubic-bezier(.2,0,0,1);--m3in:cubic-bezier(.05,.7,.1,1)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:var(--fondo);color:var(--txt);font:16px/1.45 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+html,body{margin:0;background:var(--fondo);color:var(--txt);font:16px/1.45 "Google Sans Flex","Roboto Flex",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
 body{min-height:100dvh}
-:focus-visible{outline:3px solid #C9A3B4;outline-offset:2px}
-header{background:var(--vino);color:#fff;padding:calc(18px + env(safe-area-inset-top)) 16px 20px}
-.cab{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:14px}
-.cab img{width:56px;height:56px;border-radius:50%;background:#fff;flex:none}
-.cab h1{margin:0;font-size:20px;font-weight:800;line-height:1.2}
-.cab p{margin:2px 0 0;font-size:13px;opacity:.85}
-main{max-width:960px;margin:0 auto;padding:6px 16px calc(28px + env(safe-area-inset-bottom))}
-h2{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--sec);margin:20px 2px 10px}
-.grilla{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.app{display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid var(--borde);border-radius:16px;padding:14px 12px;min-height:132px;
-  text-decoration:none;color:inherit;box-shadow:0 1px 2px rgba(38,24,29,.05),0 4px 14px rgba(38,24,29,.04);transition:transform 150ms var(--ease-out)}
-.app:active{transform:scale(.97)}
-.app img{width:46px;height:46px;border-radius:12px}
-.app b{font-size:15px;font-weight:800;line-height:1.25}
-.app span{font-size:12.5px;color:var(--sec);line-height:1.35}
-.instalar{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:22px;min-height:52px;border-radius:14px;
-  border:1.5px solid var(--vino);background:var(--suave);color:var(--vino);font:inherit;font-weight:800;font-size:15px;cursor:pointer}
+:focus-visible{outline:3px solid var(--vino);outline-offset:2px}
+.todo{max-width:1040px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 16px calc(32px + env(safe-area-inset-bottom))}
+.hrow{display:flex;justify-content:flex-end}
+.hrow img{width:56px;height:56px;display:block}
+h1{margin:20px 8px 6px;font-size:34px;line-height:42px;font-weight:700;letter-spacing:-.3px}
+.sub{margin:0 8px;font-size:15px;color:var(--sec)}
+.estado{margin:12px 8px 0;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.estado .fecha{font-size:14px;color:var(--sec)}
+.hora{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:18px;background:var(--tarjeta);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hora svg{width:18px;height:18px;color:var(--vino)}
+h2{margin:26px 8px 12px;font-size:15px;font-weight:600;color:var(--vino)}
+.grupo{display:flex;flex-direction:column;gap:3px}
+.app{display:flex;align-items:center;gap:16px;padding:14px 12px 14px 16px;background:var(--tarjeta);border-radius:6px;text-decoration:none;color:inherit;
+  transition:transform 250ms var(--m3),background 200ms;animation:entra 450ms var(--m3in) both}
+.app:first-child{border-top-left-radius:28px;border-top-right-radius:28px}
+.app:last-child{border-bottom-left-radius:28px;border-bottom-right-radius:28px}
+.app:active{transform:scale(.98)}
+.app img{width:52px;height:52px;border-radius:50%;flex:none}
+.app .t{flex:1;min-width:0}
+.app b{display:block;font-size:17px;font-weight:500}
+.app span{display:block;font-size:13.5px;color:var(--sec);margin-top:2px}
+.app svg{width:24px;height:24px;color:var(--sec);flex:none}
+@keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.instalar{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:360px;margin:28px auto 0;height:56px;border-radius:28px;border:0;
+  background:var(--cont);color:var(--cont-txt);font:inherit;font-size:15.5px;font-weight:600;cursor:pointer;transition:transform 250ms var(--m3)}
+.instalar:active{transform:scale(.97)}
 .instalar[hidden]{display:none}
 .instalar svg{width:20px;height:20px}
-.nota{text-align:center;color:var(--sec);font-size:12.5px;margin-top:14px}
-@media (min-width:640px){.grilla{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (min-width:960px){.grilla{grid-template-columns:repeat(4,minmax(0,1fr))}.instalar{max-width:360px;margin-left:auto;margin-right:auto}}
-@media (hover:hover){.app:hover{border-color:var(--vino);background:#FDFAFB}.instalar:hover{background:var(--vino);color:#fff}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}.app:active{transform:none}}
+.nota{text-align:center;color:var(--sec);font-size:13px;margin-top:14px}
+@media (min-width:900px){
+  .todo{padding:32px 56px 40px}
+  .hrow{justify-content:flex-start}
+  .grupos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
+}
+@media (hover:hover){.app:hover{background:var(--tarjeta2)}.instalar:hover{background:#FFC9CF}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<header><div class="cab"><img src="logo.jpg" alt="Clínica Reina Catalina">
-  <div><h1>Apps de la clínica</h1><p>Clínica Reina Catalina · Gases medicinales</p></div></div></header>
-<main id="contenido"></main>
+<div class="todo">
+  <div class="hrow"><img src="logo-crc.png" alt="Clínica Reina Catalina"></div>
+  <h1>Apps de la clínica</h1>
+  <p class="sub">Clínica Reina Catalina · Gases medicinales</p>
+  <div class="estado"><span class="fecha" id="fecha"></span>
+    <span class="hora" aria-label="Hora de Colombia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="hora"></span></span></div>
+  <main id="contenido"></main>
+</div>
 
 <script>
 'use strict';
@@ -68,11 +90,13 @@ const GRUPOS = [
 ];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+const FLECHA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+let k = 0;
 document.getElementById('contenido').innerHTML =
-  GRUPOS.map(g => `<h2>${esc(g.titulo)}</h2><div class="grilla">` +
-    g.apps.map(a => `<a class="app" href="${esc(a.url)}"><img src="${esc(a.icono)}" alt="" width="46" height="46"><b>${esc(a.nombre)}</b><span>${esc(a.detalle)}</span></a>`).join('') +
-    '</div>').join('') +
-  `<button class="instalar" id="bInstalar" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 21h14"/></svg>Instalar el portal</button>
+  '<div class="grupos">' + GRUPOS.map(g => `<section><h2>${esc(g.titulo)}</h2><div class="grupo">` +
+    g.apps.map(a => `<a class="app" href="${esc(a.url)}" style="animation-delay:${(k++) * 45}ms"><img src="${esc(a.icono)}" alt="" width="52" height="52"><div class="t"><b>${esc(a.nombre)}</b><span>${esc(a.detalle)}</span></div>${FLECHA}</a>`).join('') +
+    '</div></section>').join('') + '</div>' +
+  `<button class="instalar" id="bInstalar" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7m-3-3 3 3 3-3"/></svg>Instalar el portal</button>
    <p class="nota">Cada app pide su propio código de acceso.</p>`;
 
 /* Botón de instalar: aparece solo cuando el navegador lo permite */
@@ -81,6 +105,16 @@ const bI = document.getElementById('bInstalar');
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); evInstalar = e; bI.hidden = false; });
 bI.onclick = async () => { if (!evInstalar) return; evInstalar.prompt(); await evInstalar.userChoice; evInstalar = null; bI.hidden = true; };
 addEventListener('appinstalled', () => { bI.hidden = true; });
+
+/* Fecha y hora de Colombia */
+function reloj() {
+  const z = { timeZone: 'America/Bogota' };
+  const f = new Date().toLocaleDateString('es-CO', Object.assign({ weekday: 'long', day: 'numeric', month: 'long' }, z)).replace(',', '');
+  document.getElementById('fecha').textContent = f.charAt(0).toUpperCase() + f.slice(1);
+  document.getElementById('hora').textContent = new Date().toLocaleTimeString('es-CO', Object.assign({ hour: 'numeric', minute: '2-digit', hour12: true }, z))
+    .replace(/a\.?\s?m\.?/i, 'a. m.').replace(/p\.?\s?m\.?/i, 'p. m.');
+}
+reloj(); setInterval(reloj, 15000);
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
 </script>
