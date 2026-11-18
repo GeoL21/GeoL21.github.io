@@ -2,13 +2,13 @@
    también las demás apps. Por eso solo atiende los archivos del portal y nunca
    toca las peticiones ni las cachés de las otras apps.
    Al publicar cambios, sube el número de VERSION. */
-const VERSION = 'portal-v8';
-const ARCHIVOS = ['/', '/index.html', '/manifest.json', '/logo.jpg', '/logo-crc.png', '/PlusJakartaSans.ttf', '/icon-192.png', '/icon-512.png',
+const VERSION = 'portal-v9';
+const ARCHIVOS = ['/', '/index.html', '/manifest.json', '/logo.jpg', '/logo-crc.png', '/icon-192.png', '/icon-512.png',
   '/iconos/cilindros.png', '/iconos/ronda.png', '/iconos/inv-cilindros.png', '/iconos/inv-gases.png', '/iconos/tanques.png', '/iconos/alarmas.png', '/iconos/verificar.png'];
 const DEL_PORTAL = new Set(ARCHIVOS);
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(VERSION).then(c => c.addAll(ARCHIVOS)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(VERSION).then(c => c.addAll(ARCHIVOS.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()
@@ -20,6 +20,15 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET' || u.origin !== self.location.origin || !DEL_PORTAL.has(u.pathname)) return;  // lo demás no es del portal
   e.respondWith((async () => {
     const cache = await caches.open(VERSION);
+    /* La página del portal: primero internet (así abre siempre la última versión); sin señal, la copia guardada */
+    if (e.request.mode === 'navigate' || u.pathname === '/' || u.pathname === '/index.html') {
+      try {
+        const r = await Promise.race([fetch(e.request, { cache: 'no-cache' }), new Promise((_, no) => setTimeout(() => no(new Error('lento')), 4000))]);
+        if (r && r.ok) { cache.put(u.pathname, r.clone()); return r; }
+      } catch (err) { }
+      return (await cache.match(u.pathname)) || (await cache.match('/index.html')) || new Response('Sin conexión', { status: 503 });
+    }
+    /* Íconos y logos: la copia guardada al instante y se actualiza por detrás */
     const guardado = await cache.match(u.pathname);
     const red = fetch(e.request).then(r => { if (r && r.ok) cache.put(u.pathname, r.clone()); return r; }).catch(() => null);
     return guardado || (await red) || new Response('Sin conexión', { status: 503 });
