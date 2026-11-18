@@ -23,3 +23,10 @@ Portal y Verificar ronda con el estilo Material 3 "Mornye" (vino #8E4953, fondo 
 Íconos de todas las apps: círculo rosa suave #FFD9DD con ícono Material Symbols Rounded relleno en vino #8E4953
 (cilindros propane_tank, ronda fact_check, inventario inventory, material package_2, tanques speed, alarmas notifications_active,
 verificar verified_user, portal apps). Los mismos íconos se usan para instalar cada app (icon-192, icon-512 y maskable).
+
+## PixelUI (18 nov 2026)
+Portal y Verificar ronda pasan a PixelUI, copia fiel de Mornye (revisado con el revisor PixelUI y aprobado por Jorge):
+fondo #FFFBFA y superficies neutras #EEE6E7/#F5EEEF; el rosa #FFCCD4 solo en lo destacado (Control de cilindros).
+Logo a la izquierda, ícono de instalar a la derecha (solo si el navegador lo permite), título 34 px y fecha · hora.
+Apps por sección (lista GRUPOS) en accesos directos de dos columnas; todo cabe sin bajar en el celular.
+Letra Google Sans Flex wght@400..900: texto 560, negritas 660–860. Verificar sin botón de volver: el logo lleva al portal.

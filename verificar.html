@@ -3,13 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#FFF8F7">
+<meta name="theme-color" content="#FFFBFA">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="noindex">
 <title>Verificar ronda · Clínica Reina Catalina</title>
 <link rel="icon" href="iconos/verificar.png">
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..900&display=swap" rel="stylesheet">
 <style>
 /* Estándar visual de las PWA (Material 3, estilo Mornye) – 16 nov 2026 */
 :root{--vino:#8E4953;--cont:#FFD9DD;--cont-txt:#3B0713;--fondo:#FFF8F7;--tarjeta:#F8ECEC;--tarjeta2:#F0DEDF;--borde:#D8C2C4;--txt:#22191A;--sec:#534345;
@@ -68,13 +67,33 @@ button,.btn{font-weight:700}
 .dl h3{font-weight:700}
 .cil b{font-weight:700}
 
+/* ---------- PixelUI: copia fiel de Mornye (18 nov 2026) ---------- */
+:root{--fondo:#FFFBFA;--tarjeta:#F5EEEF;--tarjeta2:#EEE6E7;--malbg:#FCE4E1}
+html,body{font-weight:560;background:var(--fondo)}
+.hrow a{display:block;border-radius:50%;transition:transform 150ms var(--m3)}.hrow a:active{transform:scale(.97)}
+.hrow img{width:40px;height:40px}
+header h1{margin:36px 0 4px;font-weight:860}
+label{font-weight:660}
+button,.btn{font-weight:760;min-height:56px;border-radius:28px;background:var(--tarjeta2);color:var(--txt)}
+.fila label.btn{color:var(--txt)!important}
+button.pri{background:var(--vino);color:#fff;font-weight:760}
+.link{background:none;font-weight:660}
+@media (hover:hover){button:hover,.btn:hover{background:#E7DCDD}button.pri:hover{background:#6B2433}}
+.res .top{padding:18px 20px}
+.res .top b{font-weight:760}
+.dl h3{font-size:20px;line-height:28px;font-weight:660;color:var(--txt);margin:20px 0 8px}
+.dl div,.dl .cil{border-bottom-color:var(--tarjeta2)}
+.cil b{font-weight:660}
+.res .btn{background:var(--vino);color:#fff}
+.res.mal{animation:entra 450ms var(--m3in) both}.res.mal .top{animation:late 2.4s ease-in-out infinite}
+@keyframes late{50%{background:#F6C6C0}}
+@media (prefers-reduced-motion:reduce){.res.mal .top{animation:none}}
 </style>
 </head>
 <body>
 <header>
- <div class="hrow"><a class="volver" href="/" aria-label="Volver al portal de apps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg></a>
- <img src="logo-crc.png" alt="Clínica Reina Catalina"></div>
- <h1>Verificar ronda</h1><p>Control de cilindros de gas</p>
+ <div class="hrow"><a href="/" aria-label="Ir al portal de apps"><img src="logo-crc.png" alt="Clínica Reina Catalina"></a></div>
+ <h1>Verificar ronda</h1><p>Control de cilindros · <span id="fh"></span></p>
 </header>
 <main>
  <div class="card" id="cAdmin" hidden>
@@ -102,6 +121,7 @@ button,.btn{font-weight:700}
 <script src="jsQR.js"></script>
 <script>
 'use strict';
+(function reloj(){const z={timeZone:'America/Bogota'};const f=new Date().toLocaleDateString('es-CO',Object.assign({weekday:'long',day:'numeric',month:'long'},z)).replace(',','');const h=new Date().toLocaleTimeString('es-CO',Object.assign({hour:'numeric',minute:'2-digit',hour12:true},z)).replace(/a\.?\s?m\.?/i,'a. m.').replace(/p\.?\s?m\.?/i,'p. m.');const e=document.getElementById('fh');if(e)e.textContent=f.charAt(0).toUpperCase()+f.slice(1)+' · '+h;setTimeout(reloj,15000);})();
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const K_ADMIN = 'ver:admin';

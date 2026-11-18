@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#FFF8F7">
+<meta name="theme-color" content="#FFFBFA">
 <meta name="color-scheme" content="light">
 <title>Apps de la clínica</title>
 <link rel="manifest" href="manifest.json">
@@ -11,60 +11,58 @@
 <link rel="apple-touch-icon" href="icon-192.png?v=20261117">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..900&display=swap" rel="stylesheet">
 <style>
-/* Estándar visual de las PWA (Material 3, estilo Mornye) – 16 nov 2026 */
-:root{--vino:#8E4953;--cont:#FFD9DD;--cont-txt:#3B0713;--fondo:#FFF8F7;--tarjeta:#F8ECEC;--tarjeta2:#F0DEDF;--txt:#22191A;--sec:#534345;
+/* PixelUI: copia fiel de Mornye (18 nov 2026). Superficies neutras; el rosa solo en lo destacado. */
+:root{--vino:#84303F;--cont:#FFCCD4;--cont-txt:#33030F;--fondo:#FFFBFA;--alta:#EEE6E7;--alta2:#E7DCDD;--txt:#160D0E;--sec:#45343A;
   --m3:cubic-bezier(.2,0,0,1);--m3in:cubic-bezier(.05,.7,.1,1)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:var(--fondo);color:var(--txt);font:16px/1.45 "Google Sans Flex","Roboto Flex",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+html,body{margin:0;background:var(--fondo);color:var(--txt);font:560 16px/1.45 "Google Sans Flex",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
 body{min-height:100dvh}
 :focus-visible{outline:3px solid var(--vino);outline-offset:2px}
-.todo{max-width:1040px;margin:0 auto;padding:calc(20px + env(safe-area-inset-top)) 16px calc(32px + env(safe-area-inset-bottom))}
-.cabeza{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.cabeza img{width:52px;height:52px;display:block;flex:none}
-h1{margin:4px 8px 2px;font-size:28px;line-height:36px;font-weight:700;letter-spacing:-.3px}
-.sub{margin:0 8px;font-size:14px;color:var(--sec);font-variant-numeric:tabular-nums}
-/* Cuadrícula de íconos, como la pantalla de inicio del celular: todo cabe sin bajar */
-.grilla{margin-top:26px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 6px;background:var(--tarjeta);border-radius:28px;padding:24px 8px}
-.app{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;text-decoration:none;color:inherit;border-radius:20px;padding:4px 2px;
-  transition:transform 250ms var(--m3),background 200ms;animation:entra 450ms var(--m3in) both}
-.app:active{transform:scale(.94)}
-.app img{width:64px;height:64px;border-radius:50%}
-.app b{font-size:13.5px;line-height:1.25;font-weight:500}
-@keyframes entra{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
-.instalar{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:360px;margin:28px auto 0;height:56px;border-radius:28px;border:0;
-  background:var(--cont);color:var(--cont-txt);font:inherit;font-size:15.5px;font-weight:600;cursor:pointer;transition:transform 250ms var(--m3)}
-.instalar:active{transform:scale(.97)}
-.instalar[hidden]{display:none}
-.instalar svg{width:20px;height:20px}
-.nota{text-align:center;color:var(--sec);font-size:13px;margin-top:14px}
-@media (min-width:700px){
-  .todo{max-width:880px;padding:40px 32px}
-  .grilla{grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 8px;padding:32px 16px}
-  .app img{width:76px;height:76px}
-  .app b{font-size:15px}
+.todo{max-width:720px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))}
+/* Encabezado como Mornye: logo a la izquierda, acción a la derecha, título grande con aire */
+.arriba{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 4px}
+.arriba img{width:40px;height:40px;display:block}
+.icono{width:48px;height:48px;border-radius:24px;border:0;background:none;color:var(--txt);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:transform 150ms var(--m3),background 350ms var(--m3)}
+.icono[hidden]{display:none}
+.icono svg{width:24px;height:24px}
+.icono:active{transform:scale(.97);background:var(--alta)}
+h1{margin:36px 8px 4px;font-size:34px;line-height:42px;font-weight:860;letter-spacing:-.3px}
+.sub{margin:0 8px;font-size:15px;line-height:22px;color:var(--sec);font-variant-numeric:tabular-nums}
+/* Secciones con título negro y accesos directos en dos columnas */
+h2{margin:24px 8px 10px;font-size:20px;line-height:28px;font-weight:660}
+.grupo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.app{display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 12px;border-radius:24px;background:var(--alta);text-decoration:none;color:inherit;
+  transition:transform 150ms var(--m3),background 350ms var(--m3);animation:entra 450ms var(--m3in) both}
+.app:active{transform:scale(.97)}
+.app img{width:40px;height:40px;border-radius:50%;flex:none}
+.app span{min-width:0}
+.app b{display:block;font-size:15px;line-height:20px;font-weight:660}
+.app small{display:block;font-size:13px;line-height:18px;color:var(--sec);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* La app más usada, destacada en el contenedor suave */
+.app.dest{background:var(--cont)}.app.dest b{color:var(--cont-txt)}.app.dest small{color:#6B2A35}
+.app.dest img{box-shadow:0 0 0 3px #fff}
+@keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.nota{text-align:center;color:var(--sec);font-size:13px;margin-top:24px}
+@media (min-width:1024px){
+  .todo{max-width:1200px;padding:32px 40px}
+  .secciones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
+  .grupo{gap:12px}
+  .app{min-height:84px;padding:16px;gap:16px}
+  .app img{width:52px;height:52px}
+  .app b{font-size:16px;line-height:22px}
 }
-@media (hover:hover){.app:hover{background:var(--tarjeta2)}.instalar:hover{background:#FFC9CF}}
+@media (hover:hover){.app:hover{background:var(--alta2)}.app.dest:hover{background:#FFC1CB}.icono:hover{background:var(--alta)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-
-/* ---------- Ajuste 17 nov 2026: letras más gruesas y color un pelín más vivo (teléfono y PC) ---------- */
-:root{--vino:#84303F;--cont:#FFCCD4;--cont-txt:#33030F;--fondo:#FFF7F6;--tarjeta:#F7E3E6;--tarjeta2:#EFD5D9;--txt:#160D0E;--sec:#45343A}
-body{font-weight:500}
-h1{font-weight:800}
-.app b{font-weight:600}
-.instalar{font-weight:700}
-
 </style>
 </head>
 <body>
 <div class="todo">
-  <div class="cabeza">
-    <div><h1>Apps de la clínica</h1>
-      <p class="sub"><span id="fecha"></span> · <span id="hora"></span></p></div>
-    <img src="logo-crc.png" alt="Clínica Reina Catalina">
-  </div>
+  <div class="arriba"><img src="logo-crc.png" alt="Clínica Reina Catalina"><button class="icono" id="bInstalar" hidden aria-label="Instalar el portal" title="Instalar el portal"><svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-337q-8 0-15-2.5t-13-8.5L308-492q-12-12-11.5-28t11.5-28q12-12 28.5-12.5T365-549l75 75v-286q0-17 11.5-28.5T480-800q17 0 28.5 11.5T520-760v286l75-75q12-12 28.5-11.5T652-548q11 12 11.5 28T652-492L508-348q-6 6-13 8.5t-15 2.5ZM240-160q-33 0-56.5-23.5T160-240v-80q0-17 11.5-28.5T200-360q17 0 28.5 11.5T240-320v80h480v-80q0-17 11.5-28.5T760-360q17 0 28.5 11.5T800-320v80q0 33-23.5 56.5T720-160H240Z"/></svg></button></div>
+  <h1>Apps de la clínica</h1>
+  <p class="sub"><span id="fecha"></span> · <span id="hora"></span></p>
   <main id="contenido"></main>
 </div>
 
@@ -91,11 +89,11 @@ const GRUPOS = [
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 let k = 0;
+/* La primera app (la más usada) va destacada */
 document.getElementById('contenido').innerHTML =
-  '<nav class="grilla" aria-label="Apps">' + GRUPOS.map(g => g.apps.map(a =>
-    `<a class="app" href="${esc(a.url)}" title="${esc(a.detalle)}" style="animation-delay:${(k++) * 40}ms"><img src="${esc(a.icono)}" alt="" width="64" height="64"><b>${esc(a.nombre)}</b></a>`).join('')).join('') + '</nav>' +
-  `<button class="instalar" id="bInstalar" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7m-3-3 3 3 3-3"/></svg>Instalar el portal</button>
-   <p class="nota">Cada app pide su propio código de acceso.</p>`;
+  '<nav class="secciones" aria-label="Apps">' + GRUPOS.map(g => `<section><h2>${esc(g.titulo)}</h2><div class="grupo">` + g.apps.map(a =>
+    `<a class="app${k === 0 ? ' dest' : ''}" href="${esc(a.url)}" style="animation-delay:${(k++) * 50}ms"><img src="${esc(a.icono)}" alt="" width="40" height="40"><span><b>${esc(a.nombre)}</b><small>${esc(a.detalle)}</small></span></a>`).join('') + '</div></section>').join('') + '</nav>' +
+  '<p class="nota">Cada app pide su propio código de acceso.</p>';
 
 /* Botón de instalar: aparece solo cuando el navegador lo permite */
 let evInstalar = null;
