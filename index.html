@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..900&display=swap" rel="stylesheet">
 <style>
-/* PixelUI: copia fiel de Mornye (18 nov 2026). Superficies neutras; el rosa solo en lo destacado. */
+/* PixelUI: copia fiel de Mornye (18 nov 2026). Superficies neutras. */
 :root{--vino:#84303F;--cont:#FFCCD4;--cont-txt:#33030F;--fondo:#FFFBFA;--alta:#EEE6E7;--alta2:#E7DCDD;--txt:#160D0E;--sec:#45343A;
   --m3:cubic-bezier(.2,0,0,1);--m3in:cubic-bezier(.05,.7,.1,1)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -41,9 +41,6 @@ h2{margin:24px 8px 10px;font-size:20px;line-height:28px;font-weight:660}
 .app span{min-width:0}
 .app b{display:block;font-size:15px;line-height:20px;font-weight:660}
 .app small{display:block;font-size:13px;line-height:18px;color:var(--sec);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* La app más usada, destacada en el contenedor suave */
-.app.dest{background:var(--cont)}.app.dest b{color:var(--cont-txt)}.app.dest small{color:#6B2A35}
-.app.dest img{box-shadow:0 0 0 3px #fff}
 @keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .nota{text-align:center;color:var(--sec);font-size:13px;margin-top:24px}
 @media (min-width:1024px){
@@ -54,7 +51,7 @@ h2{margin:24px 8px 10px;font-size:20px;line-height:28px;font-weight:660}
   .app img{width:52px;height:52px}
   .app b{font-size:16px;line-height:22px}
 }
-@media (hover:hover){.app:hover{background:var(--alta2)}.app.dest:hover{background:#FFC1CB}.icono:hover{background:var(--alta)}}
+@media (hover:hover){.app:hover{background:var(--alta2)}.icono:hover{background:var(--alta)}}
 /* Aviso de versión nueva */
 .snack{position:fixed;left:16px;right:16px;bottom:calc(20px + env(safe-area-inset-bottom));max-width:560px;margin:auto;z-index:20;display:flex;align-items:center;gap:8px;
   background:#382E2F;color:#FCEBEC;border-radius:16px;padding:8px 8px 8px 18px;font-size:15px;opacity:0;transform:translateY(16px);pointer-events:none;
@@ -97,10 +94,9 @@ const GRUPOS = [
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 let k = 0;
-/* La primera app (la más usada) va destacada */
 document.getElementById('contenido').innerHTML =
   '<nav class="secciones" aria-label="Apps">' + GRUPOS.map(g => `<section><h2>${esc(g.titulo)}</h2><div class="grupo">` + g.apps.map(a =>
-    `<a class="app${k === 0 ? ' dest' : ''}" href="${esc(a.url)}" style="animation-delay:${(k++) * 50}ms"><img src="${esc(a.icono)}" alt="" width="40" height="40"><span><b>${esc(a.nombre)}</b><small>${esc(a.detalle)}</small></span></a>`).join('') + '</div></section>').join('') + '</nav>' +
+    `<a class="app" href="${esc(a.url)}" style="animation-delay:${(k++) * 50}ms"><img src="${esc(a.icono)}" alt="" width="40" height="40"><span><b>${esc(a.nombre)}</b><small>${esc(a.detalle)}</small></span></a>`).join('') + '</div></section>').join('') + '</nav>' +
   '<p class="nota">Cada app pide su propio código de acceso.</p>';
 
 /* Botón de instalar: aparece solo cuando el navegador lo permite */
