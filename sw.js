@@ -2,9 +2,9 @@
    también las demás apps. Por eso solo atiende los archivos del portal y nunca
    toca las peticiones ni las cachés de las otras apps.
    Al publicar cambios, sube el número de VERSION. */
-const VERSION = 'portal-v12';
+const VERSION = 'portal-v13';
 const ARCHIVOS = ['/', '/index.html', '/manifest.json', '/logo.jpg', '/logo-crc.png', '/icon-192.png', '/icon-512.png',
-  '/iconos/cilindros.png', '/iconos/ronda.png', '/iconos/inv-cilindros.png', '/iconos/inv-gases.png', '/iconos/tanques.png', '/iconos/alarmas.png', '/iconos/verificar.png'];
+  '/iconos/cilindros.png', '/iconos/ronda.png', '/iconos/inv-cilindros.png', '/iconos/inv-gases.png', '/iconos/tanques.png', '/iconos/alarmas.png', '/iconos/hojas-vida.png', '/iconos/verificar.png'];
 const DEL_PORTAL = new Set(ARCHIVOS);
 
 self.addEventListener('install', e => {
