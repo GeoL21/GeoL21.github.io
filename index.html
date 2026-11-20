@@ -44,20 +44,28 @@ h2{margin:24px 8px 10px;font-size:20px;line-height:28px;font-weight:660}
 @keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .nota{text-align:center;color:var(--sec);font-size:13px;margin-top:24px}
 @media (min-width:1024px){
-  /* PC: el portal ocupa casi toda la pantalla, con tarjetas grandes */
-  .todo{max-width:none;width:min(94vw,1800px);padding:3vh 0 4vh}
-  .arriba img{width:56px;height:56px}
-  h1{font-size:clamp(40px,3.4vw,60px);line-height:1.15;margin-top:3vh}
+  /* PC: las 8 apps en dos filas de 4 y todo cabe en la pantalla, sin scroll */
+  .todo{max-width:none;width:min(94vw,1800px);padding:2.5vh 0 2vh}
+  .arriba img{width:52px;height:52px}
+  .titulo{display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  h1{font-size:clamp(36px,3vw,54px);line-height:1.15;margin:1vh 8px 0}
   .sub{font-size:clamp(17px,1.25vw,22px);line-height:1.4}
-  h2{font-size:clamp(22px,1.6vw,30px);line-height:1.3;margin:4vh 8px 14px}
-  .secciones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:3vw}
-  .grupo{gap:16px}
-  .app{min-height:clamp(130px,20vh,240px);padding:clamp(18px,1.6vw,30px);gap:clamp(16px,1.4vw,26px);border-radius:32px}
-  .app img{width:clamp(64px,5vw,96px);height:clamp(64px,5vw,96px)}
-  .app b{font-size:clamp(19px,1.45vw,26px);line-height:1.25}
-  .app small{font-size:clamp(15px,1.05vw,19px);line-height:1.35;white-space:normal}
-  .nota{font-size:16px;margin-top:4vh}
+  h2{font-size:clamp(19px,1.35vw,26px);line-height:1.3;margin:1.6vh 8px 1vh}
+  .secciones{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:16px}
+  .secciones section{grid-column:span var(--n);display:flex;flex-direction:column;min-height:0}
+  .grupo{grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:16px;flex:1}
+  .app{flex-direction:column;justify-content:center;text-align:center;min-height:150px;padding:clamp(14px,1.4vw,26px);gap:clamp(10px,1.4vh,18px);border-radius:32px}
+  .app img{width:clamp(56px,8vh,92px);height:clamp(56px,8vh,92px)}
+  .app b{font-size:clamp(18px,1.35vw,25px);line-height:1.25}
+  .app small{font-size:clamp(14px,1vw,18px);line-height:1.35;white-space:normal}
+  .nota{font-size:15px;margin:1.5vh 0 0}
 }
+@media (min-width:1024px) and (min-height:600px){
+  /* Las tarjetas toman el alto que sobra de la ventana */
+  .todo{height:100dvh;display:flex;flex-direction:column}
+  #contenido{flex:1;min-height:0;display:flex;flex-direction:column}
+  .secciones{flex:1;min-height:0;grid-template-rows:repeat(2,minmax(0,1fr))}
+  .app{min-height:0}
 }
 @media (hover:hover){.app:hover{background:var(--alta2)}.icono:hover{background:var(--alta)}}
 /* Aviso de versión nueva */
@@ -73,8 +81,8 @@ h2{margin:24px 8px 10px;font-size:20px;line-height:28px;font-weight:660}
 <body>
 <div class="todo">
   <div class="arriba"><img src="logo-crc.png" alt="Clínica Reina Catalina"><button class="icono" id="bInstalar" hidden aria-label="Instalar el portal" title="Instalar el portal"><svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-337q-8 0-15-2.5t-13-8.5L308-492q-12-12-11.5-28t11.5-28q12-12 28.5-12.5T365-549l75 75v-286q0-17 11.5-28.5T480-800q17 0 28.5 11.5T520-760v286l75-75q12-12 28.5-11.5T652-548q11 12 11.5 28T652-492L508-348q-6 6-13 8.5t-15 2.5ZM240-160q-33 0-56.5-23.5T160-240v-80q0-17 11.5-28.5T200-360q17 0 28.5 11.5T240-320v80h480v-80q0-17 11.5-28.5T760-360q17 0 28.5 11.5T800-320v80q0 33-23.5 56.5T720-160H240Z"/></svg></button></div>
-  <h1>Apps de la clínica</h1>
-  <p class="sub"><span id="fecha"></span> · <span id="hora"></span></p>
+  <div class="titulo"><h1>Apps de la clínica</h1>
+  <p class="sub"><span id="fecha"></span> · <span id="hora"></span></p></div>
   <main id="contenido"></main>
 </div>
 <div class="snack" id="nuevaVer" role="status"><span>Hay una versión nueva del portal</span><button type="button" onclick="location.reload()">Actualizar</button></div>
@@ -106,7 +114,7 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;'
 
 let k = 0;
 document.getElementById('contenido').innerHTML =
-  '<nav class="secciones" aria-label="Apps">' + GRUPOS.map(g => `<section><h2>${esc(g.titulo)}</h2><div class="grupo">` + g.apps.map(a =>
+  '<nav class="secciones" aria-label="Apps">' + GRUPOS.map(g => `<section style="--n:${g.apps.length}"><h2>${esc(g.titulo)}</h2><div class="grupo">` + g.apps.map(a =>
     `<a class="app" href="${esc(a.url)}" style="animation-delay:${(k++) * 50}ms"><img src="${esc(a.icono)}" alt="" width="40" height="40"><span><b>${esc(a.nombre)}</b><small>${esc(a.detalle)}</small></span></a>`).join('') + '</div></section>').join('') + '</nav>' +
   '<p class="nota">Cada app pide su propio código de acceso.</p>';
 
