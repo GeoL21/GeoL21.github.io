@@ -76,6 +76,16 @@ h2{margin:24px 8px 10px;font-size:20px;line-height:28px;font-weight:660}
 .snack span{flex:1}
 .snack button{border:0;background:none;color:#FFB3BB;font:inherit;font-weight:860;min-height:44px;padding:0 14px;border-radius:22px;cursor:pointer}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- PC (23 nov 2026): logo y título en la misma línea para dejar más espacio a las apps. El celular no cambia. ---------- */
+@media (min-width:1024px){
+  .todo{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);column-gap:16px;align-items:center}
+  .todo>#contenido{grid-row:2;align-self:stretch}
+  .todo>*{grid-column:1/-1}
+  .todo>.arriba{grid-column:1;grid-row:1;margin:0}
+  .todo>.titulo{grid-column:2;grid-row:1;align-items:center}
+  .todo>.titulo h1{margin:0}
+}
 </style>
 </head>
 <body>
